@@ -1,0 +1,687 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Leonida Field Guide · GTA 6 secrets, cheats & map</title>
+<meta name="description" content="Fan-made GTA 6 guide: interactive Leonida map, cheat codes, rare cars, free weapons, Easter eggs, side missions and Chapter 1 missables.">
+<meta property="og:title" content="Leonida Field Guide · GTA 6 secrets, cheats & map">
+<meta property="og:description" content="Fan-made GTA 6 guide: interactive Leonida map, cheat codes, rare cars, free weapons, Easter eggs, side missions and Chapter 1 missables.">
+<meta property="og:image" content="img/hero.jpg">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#120d1f">
+<link rel="icon" href="img/vi-logo.png">
+
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: night-sky hero with the official VI mark, a sticky search + filter bar, then a single sortable field-guide grid. */
+:root {
+  --night: #120d1f;          /* Vice City night */
+  --night-2: #1b1430;        /* raised panels */
+  --night-3: #261d42;        /* chips, inputs */
+  --line: #3a2e5c;
+  --cream: #f6efe3;          /* primary text */
+  --muted: #b3a8c9;          /* secondary text */
+  --sun-1: #ff5e8a;          /* sunset pink */
+  --sun-2: #ffb347;          /* sunset amber */
+  --teal: #3fd6c6;           /* Leonida water */
+  --ok: #4fdc8d; --warn: #ffc857; --bad: #ff7a9a;
+  --display: "Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
+  --body: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--night); color: var(--cream); font-family: var(--body); font-size: 16px; line-height: 1.55; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--night); }
+a { color: var(--sun-2); }
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, label:focus-within { outline: 2px solid var(--teal); outline-offset: 2px; }
+.wrap { max-width: 1180px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+
+/* ---------- hero ---------- */
+.hero { position: relative; overflow: hidden; border-bottom: 1px solid var(--line); }
+.hero__img { position: absolute; inset: 0; background: url("img/hero.jpg") center 40% / cover no-repeat; opacity: .55; }
+.hero__img::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(18,13,31,.15) 0%, rgba(18,13,31,.55) 55%, var(--night) 100%); }
+.hero .wrap { position: relative; padding-block: 56px 40px; display: grid; gap: 22px; }
+.hero__logo { width: 132px; height: auto; filter: drop-shadow(0 8px 24px rgba(0,0,0,.5)); }
+.eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+h1 { font-family: var(--display); font-weight: 900; font-size: clamp(54px, 10vw, 112px); line-height: .9; letter-spacing: .01em; margin: 0; text-transform: uppercase; text-wrap: balance; }
+h1 .sun { background: linear-gradient(90deg, var(--sun-1), var(--sun-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.lede { max-width: 60ch; font-size: 18px; color: var(--cream); margin: 0; }
+.stats { display: flex; flex-wrap: wrap; gap: 10px; }
+.stat { background: rgba(27,20,48,.8); border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; font-size: 14px; color: var(--muted); }
+.stat b { color: var(--cream); font-variant-numeric: tabular-nums; }
+
+/* ---------- category rail ---------- */
+.rail { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 10px; padding-block: 28px 8px; }
+.tile { position: relative; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; min-height: 108px; background: var(--night-2); cursor: pointer; text-align: left; color: var(--cream); padding: 0; font: inherit; }
+.tile img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .55; transition: opacity .2s, transform .4s; }
+.tile::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 20%, rgba(18,13,31,.92)); }
+.tile span { position: absolute; left: 12px; right: 12px; bottom: 10px; z-index: 1; display: grid; }
+.tile strong { font-family: var(--display); font-weight: 900; font-size: 22px; text-transform: uppercase; line-height: 1; }
+.tile small { color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
+.tile:hover img { opacity: .75; transform: scale(1.04); }
+.tile[aria-pressed="true"] { border-color: var(--sun-2); box-shadow: 0 0 0 1px var(--sun-2) inset; }
+.tile[aria-pressed="true"] img { opacity: .85; }
+
+/* ---------- sticky controls ---------- */
+.controls { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: rgba(18,13,31,.94); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+.controls .wrap { padding-block: 12px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.search { flex: 1 1 260px; min-width: 0; position: relative; }
+.search input { width: 100%; background: var(--night-3); border: 1px solid var(--line); color: var(--cream); border-radius: 12px; padding: 11px 14px 11px 40px; font: inherit; font-size: 15px; }
+.search svg { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); }
+select { background: var(--night-3); border: 1px solid var(--line); color: var(--cream); border-radius: 12px; padding: 10px 12px; font: inherit; font-size: 14px; }
+.toggle { display: inline-flex; gap: 8px; align-items: center; font-size: 14px; color: var(--muted); border-radius: 10px; padding: 4px 6px; }
+.progress { margin-left: auto; font-family: var(--mono); font-size: 13px; color: var(--muted); }
+.progress b { color: var(--ok); }
+
+/* ---------- grid + cards ---------- */
+main .wrap { padding-block: 24px 64px; }
+.count { color: var(--muted); font-size: 14px; margin: 0 0 14px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr)); gap: 14px; }
+.card { background: var(--night-2); border: 1px solid var(--line); border-radius: 16px; padding: 18px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.card.found { border-color: rgba(79,220,141,.5); }
+.card.found h3 { text-decoration: line-through; text-decoration-color: rgba(79,220,141,.7); }
+.card__top { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.tag { font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; padding: 3px 8px; border-radius: 6px; background: var(--night-3); color: var(--muted); border: 1px solid var(--line); }
+.tag.cat { color: var(--night); background: linear-gradient(90deg, var(--sun-1), var(--sun-2)); border: 0; font-weight: 700; }
+.tag.miss { color: var(--night); background: var(--bad); border: 0; font-weight: 700; }
+.tag.c-multi { color: var(--ok); border-color: rgba(79,220,141,.4); }
+.tag.c-single { color: var(--warn); border-color: rgba(255,200,87,.4); }
+.tag.c-conflict { color: var(--bad); border-color: rgba(255,122,154,.4); }
+.card h3 { font-family: var(--display); font-weight: 700; font-size: 28px; line-height: 1.02; margin: 0; text-transform: uppercase; text-wrap: balance; }
+.where { display: flex; gap: 8px; color: var(--cream); font-weight: 600; font-size: 15px; }
+.where svg { flex: none; margin-top: 3px; }
+.when { color: var(--teal); font-size: 14px; font-weight: 600; }
+.how { margin: 0; padding-left: 18px; color: var(--muted); font-size: 15px; display: grid; gap: 4px; }
+.how li::marker { color: var(--sun-2); }
+.codes { display: flex; flex-wrap: wrap; gap: 6px; }
+.code { font-family: var(--mono); font-weight: 700; font-size: 14px; background: #0c0816; border: 1px dashed var(--sun-2); color: var(--sun-2); padding: 4px 10px; border-radius: 8px; cursor: copy; }
+.note { font-size: 13px; color: var(--muted); border-left: 2px solid var(--line); padding-left: 10px; }
+.card__foot { display: flex; justify-content: space-between; gap: 10px; align-items: center; border-top: 1px solid var(--line); padding-top: 10px; margin-top: 2px; flex-wrap: wrap; }
+.src { font-size: 12px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 8px; min-width: 0; }
+.src a { color: var(--muted); }
+.src a:hover { color: var(--sun-2); }
+.found-btn { display: inline-flex; gap: 6px; align-items: center; font-size: 13px; font-weight: 600; color: var(--cream); cursor: pointer; user-select: none; }
+.found-btn input { accent-color: var(--ok); width: 16px; height: 16px; }
+.empty { text-align: center; color: var(--muted); padding: 48px 16px; border: 1px dashed var(--line); border-radius: 16px; }
+
+
+/* ---------- map ---------- */
+.mapsec .wrap { padding-block: 28px 8px; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 20px; align-items: start; }
+.sec-h { font-family: var(--display); font-weight: 900; font-size: 40px; text-transform: uppercase; margin: 0; line-height: 1; }
+.sec-sub { color: var(--muted); font-size: 14px; margin: 6px 0 0; }
+.map { position: relative; border-radius: 18px; overflow: hidden; border: 1px solid var(--line); background: #0a5a7a; aspect-ratio: 1600 / 2190; touch-action: pan-y; }
+.map__inner { position: absolute; left: 0; top: 0; width: 100%; height: 100%; }
+.map.zoomed { overflow: auto; touch-action: auto; }
+.map img { width: 100%; height: 100%; display: block; }
+.pin { position: absolute; width: 22px; height: 22px; margin: -11px 0 0 -11px; border-radius: 50%; border: 2px solid #fff; padding: 0; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,.45); transition: transform .15s; }
+.pin:hover, .pin[aria-pressed="true"] { transform: scale(1.35); z-index: 2; }
+.pin[aria-pressed="true"] { box-shadow: 0 0 0 4px rgba(255,255,255,.45), 0 2px 10px rgba(0,0,0,.5); }
+.pin.dim { opacity: .18; pointer-events: none; }
+.map__zoom { position: absolute; right: 10px; top: 10px; display: grid; gap: 6px; z-index: 3; }
+.map__zoom button { width: 38px; height: 38px; border-radius: 10px; border: 1px solid rgba(0,0,0,.15); background: rgba(255,255,255,.92); color: #120d1f; font: 700 20px/1 var(--body); cursor: pointer; }
+.mapside { display: grid; gap: 14px; position: sticky; top: 84px; }
+.keys { display: flex; flex-wrap: wrap; gap: 6px; }
+.key { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: var(--cream); background: var(--night-2); border: 1px solid var(--line); border-radius: 999px; padding: 5px 11px; cursor: pointer; font-family: inherit; }
+.key i { width: 10px; height: 10px; border-radius: 50%; display: block; }
+.key[aria-pressed="true"] { border-color: var(--sun-2); background: var(--night-3); }
+.peek { background: var(--night-2); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.peek__body { padding: 16px 18px 18px; display: grid; gap: 8px; }
+.peek h3 { font-family: var(--display); font-weight: 700; font-size: 30px; line-height: 1; margin: 0; text-transform: uppercase; }
+.peek .empty-peek { color: var(--muted); padding: 18px; font-size: 15px; }
+.btn { justify-self: start; background: linear-gradient(90deg, var(--sun-1), var(--sun-2)); color: var(--night); border: 0; border-radius: 10px; padding: 9px 14px; font: 700 14px var(--body); cursor: pointer; }
+.fine { font-size: 12px; color: var(--muted); margin: 0; }
+.card.flash { animation: flash 1.6s ease; }
+@keyframes flash { 0%, 40% { box-shadow: 0 0 0 3px var(--sun-2); } 100% { box-shadow: 0 0 0 0 transparent; } }
+
+/* ---------- vehicle photos ---------- */
+.shot { margin: -18px -18px 4px; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 16px 16px 0 0; background: var(--night-3); position: relative; }
+.shot img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.shot--none { display: grid; place-items: center; background: radial-gradient(120% 90% at 20% 0%, rgba(255,94,138,.28), transparent 60%), radial-gradient(120% 90% at 100% 100%, rgba(255,179,71,.2), transparent 55%), var(--night-3); }
+.shot--none span { font-family: var(--display); font-weight: 900; font-size: 34px; text-transform: uppercase; color: rgba(246,239,227,.16); text-align: center; padding: 0 16px; line-height: .95; }
+.shot small { position: absolute; left: 10px; bottom: 8px; font-family: var(--mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: rgba(246,239,227,.75); background: rgba(18,13,31,.6); padding: 2px 6px; border-radius: 4px; }
+.peek .shot { margin: 0; border-radius: 0; }
+
+/* ---------- cheats ---------- */
+.cheats .wrap { padding-block: 36px 12px; display: grid; gap: 16px; grid-template-columns: minmax(0, 1fr); }
+.cheat-how { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.step { background: var(--night-2); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; display: flex; gap: 12px; align-items: center; font-size: 15px; }
+.step b { font-family: var(--display); font-size: 30px; line-height: 1; color: var(--sun-2); }
+.warnbox { border: 1px solid rgba(255,122,154,.45); background: rgba(255,122,154,.08); color: var(--cream); border-radius: 14px; padding: 12px 16px; font-size: 14px; }
+.cfilters { display: flex; flex-wrap: wrap; gap: 6px; }
+.clist { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(340px, 100%), 1fr)); gap: 12px; }
+.cheat { background: var(--night-2); border: 1px solid var(--line); border-radius: 16px; padding: 16px; display: grid; gap: 10px; min-width: 0; }
+.cheat__top { display: flex; justify-content: space-between; gap: 10px; align-items: start; }
+.cheat h3 { font-family: var(--display); font-weight: 700; font-size: 26px; line-height: 1; margin: 0; text-transform: uppercase; }
+.cheat p { margin: 0; color: var(--muted); font-size: 14px; }
+.pad { display: flex; flex-wrap: wrap; gap: 5px; }
+.pad span { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 8px; background: #0c0816; border: 1px solid var(--sun-2); color: var(--sun-2); font-weight: 700; font-size: 18px; }
+.copybtn { flex: none; background: var(--night-3); color: var(--cream); border: 1px solid var(--line); border-radius: 10px; padding: 7px 11px; font: 600 13px var(--body); cursor: pointer; }
+.unlock { font-size: 13px; color: var(--teal); }
+
+/* ---------- footer ---------- */
+footer { border-top: 1px solid var(--line); }
+footer .wrap { padding-block: 36px 56px; display: grid; gap: 14px; color: var(--muted); font-size: 14px; }
+footer h2 { font-family: var(--display); font-weight: 900; text-transform: uppercase; color: var(--cream); font-size: 28px; margin: 0; }
+.legend { display: flex; flex-wrap: wrap; gap: 8px; }
+.toast { position: fixed; left: 50%; bottom: calc(18px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--cream); color: var(--night); padding: 8px 14px; border-radius: 999px; font-weight: 700; font-size: 14px; opacity: 0; transition: opacity .2s; pointer-events: none; }
+.toast.show { opacity: 1; }
+
+@media (max-width: 980px) { .cheat-how { grid-template-columns: 1fr; } .rail { grid-template-columns: repeat(4, minmax(0, 1fr)); } .mapsec .wrap { grid-template-columns: minmax(0, 1fr); } .mapside { position: static; min-width: 0; } }
+@media (max-width: 560px) {
+  .rail { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .grid { grid-template-columns: 1fr; }
+  .progress { margin-left: 0; width: 100%; }
+  .hero .wrap { padding-block: 40px 28px; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+
+
+<header class="hero">
+  <div class="hero__img" aria-hidden="true"></div>
+  <div class="wrap">
+    <img class="hero__logo" src="img/vi-logo.png" alt="Grand Theft Auto VI logo">
+    <div class="eyebrow">GTA 6 · Launch week edition · Updated Nov 21, 2026</div>
+    <h1>Leonida <span class="sun">Field Guide</span></h1>
+    <p class="lede">An interactive map, cheat codes, and every Easter egg, rare vehicle, free unique weapon, secret spot, side mission and missable we could verify, with where to go, when to go, and exactly what to do. Tick things off as you find them.</p>
+    <div class="stats" id="stats"></div>
+  </div>
+</header>
+
+<section class="wrap" aria-label="Categories">
+  <div class="rail" id="rail"></div>
+</section>
+
+
+<section class="mapsec" aria-labelledby="map-h">
+  <div class="wrap">
+    <div>
+      <h2 class="sec-h" id="map-h">The <span class="sun" style="background:linear-gradient(90deg,var(--sun-1),var(--sun-2));-webkit-background-clip:text;background-clip:text;color:transparent">map</span></h2>
+      <p class="sec-sub">Tap a pin to see what's there. Pins mark the area guides describe, not an exact spot.</p>
+      <div class="map" id="map" style="margin-top:14px">
+        <div class="map__zoom"><button id="zin" aria-label="Zoom in">+</button><button id="zout" aria-label="Zoom out">−</button></div>
+        <div class="map__inner" id="mapInner"><img src="img/map.jpg" alt="Official map of the state of Leonida" width="1600" height="2190"><div id="pins"></div></div>
+      </div>
+    </div>
+    <aside class="mapside">
+      <div class="keys" id="keys"></div>
+      <div class="peek" id="peek"><p class="empty-peek">Pick a pin on the map. Vehicles show their official photo when Rockstar has released one.</p></div>
+      <p class="fine">Map: official Leonida poster, © Rockstar Games. Pins placed by hand from guide descriptions.</p>
+    </aside>
+  </div>
+</section>
+
+<section class="cheats" id="cheats" aria-labelledby="cheat-h">
+  <div class="wrap">
+    <div>
+      <h2 class="sec-h" id="cheat-h">Cheat <span style="background:linear-gradient(90deg,var(--sun-1),var(--sun-2));-webkit-background-clip:text;background-clip:text;color:transparent">codes</span></h2>
+      <p class="sec-sub">GTA 6 has 61 cheats. Each one unlocks in-game first; these are the codes players have found so far.</p>
+    </div>
+    <div class="cheat-how">
+      <div class="step"><b>1</b><span>In free roam, press <strong>Up</strong> on the D-pad to open the phone.</span></div>
+      <div class="step"><b>2</b><span>Hold <strong>L1 + R1</strong> (Xbox: <strong>LB + RB</strong>) on the phone's home screen.</span></div>
+      <div class="step"><b>3</b><span>Enter the code on the <strong>D-pad</strong> while holding them.</span></div>
+    </div>
+    <div class="warnbox">Using any cheat turns off trophies/achievements <strong>and saving</strong> for that play session. Save first, then reload when you're done. Reports also say most cheats only unlock after you finish the story.</div>
+    <div class="cfilters" id="cfilters"></div>
+    <div class="clist" id="clist"></div>
+    <p class="fine">Codes match across PC Gamer, Beebom and GamerTweak. Unlock conditions come from PC Gamer; “Unlock: not found yet” means no guide has confirmed it.</p>
+  </div>
+</section>
+
+<div class="controls">
+  <div class="wrap">
+    <label class="search" for="q">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="#b3a8c9" stroke-width="2"/><path d="M20 20l-4-4" stroke="#b3a8c9" stroke-width="2" stroke-linecap="round"/></svg>
+      <input id="q" type="search" placeholder="Search: Infernus, Kalaga, code, Shirley..." autocomplete="off">
+    </label>
+    <select id="chapter" aria-label="Filter by chapter">
+      <option value="">Any chapter</option>
+      <option value="1">Chapter 1</option>
+      <option value="2">Chapter 2</option>
+      <option value="3">Chapter 3</option>
+      <option value="4">Chapter 4</option>
+      <option value="5">Chapter 5</option>
+      <option value="any">Anytime / free roam</option>
+    </select>
+    <label class="toggle" for="verified"><input id="verified" type="checkbox"> Multi-source only</label>
+    <label class="toggle" for="hidefound"><input id="hidefound" type="checkbox"> Hide found</label>
+    <div class="progress" id="progress"></div>
+  </div>
+</div>
+
+<main>
+  <div class="wrap">
+    <p class="count" id="count"></p>
+    <div class="grid" id="grid"></div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <h2>How to read this guide</h2>
+    <div class="legend">
+      <span class="tag c-multi">Multi-source</span><span>Reported by two or more guides.</span>
+      <span class="tag c-single">Single source</span><span>One guide so far, check in game.</span>
+      <span class="tag c-conflict">Conflicting</span><span>Guides disagree on the details.</span>
+      <span class="tag miss">Missable</span><span>Can be lost for good.</span>
+    </div>
+    <p>GTA 6 launched on November 19, 2026, and launch-week guides still disagree on some details. Spots, spawns and triggers can change with patches. Codes are shown exactly as guides report them; tap a code to copy it.</p>
+    <p>Fan-made guide by <strong>@abhi.jeeeet.singh</strong>, researched and built with Claude. Not affiliated with Rockstar Games or Take-Two. Images © Rockstar Games, from the official GTA VI media kit.</p>
+  </div>
+</footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const S = {
+  sk_cars: ["Sportskeeda", "https://www.sportskeeda.com/esports/gta-6-5-rarest-cars-get"],
+  sk_spots: ["Sportskeeda", "https://www.sportskeeda.com/esports/all-secret-locations-gta-6"],
+  xtreme_cars: ["GTA-Xtreme", "https://www.gta-xtreme.com/gta-6/locations/hidden-cars"],
+  xtreme_eggs: ["GTA-Xtreme", "https://www.gta-xtreme.com/gta-6/locations/easter-eggs"],
+  leonidaverse: ["Leonidaverse", "https://leonidaverse.com/en/codex/gta-6-vehicles"],
+  wiki: ["WikiGTAVI", "https://www.wikigtavi.com/guides/gta-6-easter-eggs-secrets"],
+  game8: ["Game8", "https://game8.co/games/GTA-6/archives/638651"],
+  gamespot: ["GameSpot", "https://www.gamespot.com/articles/gta-6-easter-eggs-list-and-locations/"],
+  dexerto_dex: ["Dexerto", "https://www.dexerto.com/gta/gta-6-players-find-dexters-apartment-serial-killer-kit-and-can-even-steal-his-boat-3429888/"],
+  dexerto_house: ["Dexerto", "https://www.dexerto.com/gta/gta-6-screenshot-hidden-in-san-andreas-back-in-2021-was-real-and-the-house-has-a-dark-secret-3429837/"],
+  bloody: ["Bloody Disgusting", "https://bloody-disgusting.com/video-games/3976301/grand-theft-auto-vi-contains-a-dexter-easter-egg/"],
+  ibt_egg: ["IBTimes", "https://www.ibtimes.co.uk/gta-6-player-discovers-literal-easter-egg-leonida-1833342"],
+  shh: ["SuperHeroHype", "https://www.superherohype.com/video-games/707634-gta-6-x-men-parody-rx-men-comic"],
+  fh: ["Fiction Horizon", "https://fictionhorizon.com/gta-6-hides-a-hilarious-x-men-parody-with-a-pharmaceutical-twist/"],
+  outputlag_w: ["Outputlag", "https://outputlag.com/guides/gta-6-unique-weapons-locations/"],
+  metaforge_w: ["MetaForge", "https://metaforge.app/gta-6/where-to-find-the-unique-weapon-kingfishers-laird-350-sniper-in-gta-6"],
+  sk_weap: ["Sportskeeda", "https://www.sportskeeda.com/gta/all-hidden-legendary-weapons-locations-gta-6"],
+  detonated: ["Detonated", "https://detonated.com/gta-6-weapon-variant-locations"],
+  ppx_side: ["PowerPyx", "https://www.powerpyx.com/gta-6-all-strangers-freaks-side-missions/"],
+  outputlag_side: ["Outputlag", "https://outputlag.com/guides/gta-6-side-missions-strangers-freaks/"],
+  ppx_100: ["PowerPyx", "https://www.powerpyx.com/gta-6-100-completion-checklist-guide/"],
+  leonidaverse_c: ["Leonidaverse", "https://leonidaverse.com/en/codex/gta-6-collectibles"],
+  vicecheats: ["ViceCheats", "https://vicecheats.com/guides/gta-6-collectibles/"],
+  outputlag_m: ["Outputlag", "https://outputlag.com/guides/gta-6-missables/"],
+  metaforge_m: ["MetaForge", "https://metaforge.app/gta-6/gta-6-chapter-1-missables-point-of-no-return"],
+  leonipedia: ["Leonipedia", "https://leonipedia.com/guides/meditation-spots/"],
+  gta6patch: ["GTA6Patch", "https://gta6patch.com/articles/gta-6-missable-trophies/"],
+  pcgamer_birds: ["PC Gamer", "https://www.pcgamer.com/games/grand-theft-auto/twitchers-rejoice-gta-6-will-have-62-different-species-of-birds-though-that-falls-a-bit-short-of-the-over-500-native-species-found-in-florida/"],
+  gi_animals: ["Game Informer", "https://gameinformer.com/exclusive/2026/09/29/exclusive-grand-theft-auto-vi-includes-over-170-animal-species"],
+  rockstar: ["Rockstar Games", "https://www.rockstargames.com/VI/media"],
+  gamesgg_cars: ["games.gg", "https://games.gg/grand-theft-auto-vi/guides/grand-theft-auto-6-cars-known-locations-unlocks/"],
+  gamesgg_tank: ["games.gg", "https://games.gg/grand-theft-auto-vi/guides/grand-theft-auto-6-military-tank-how-to-get-challenging-tank-trophy/"],
+  pcg_heli: ["PC Gamer", "https://www.pcgamer.com/games/grand-theft-auto/gta-6-first-plane-and-helicopter/"],
+  pcg_base: ["PC Gamer", "https://www.pcgamer.com/games/grand-theft-auto/gta-6-military-base-location/"],
+  beebom_jets: ["Beebom", "https://beebom.com/how-to-get-jets-in-gta-6/"],
+  alcast_ch: ["AlcastHQ", "https://alcasthq.com/?p=87563"],
+  tweaktown: ["TweakTown", "https://www.tweaktown.com/news/114769/gta-6-has-61-cheats-but-youll-have-to-beat-the-story-before-using-any-of-them/index.html"],
+  pcg_cheats: ["PC Gamer", "https://www.pcgamer.com/games/grand-theft-auto/gta-6-cheats-list/"],
+  rockstar_map: ["Rockstar Games (map)", "https://www.rockstargames.com/VI"],
+};
+
+const CATS = {
+  egg:     { label: "Easter eggs",     img: "img/egg.jpg" },
+  car:     { label: "Rare vehicles",       img: "img/car.jpg" },
+  gun:     { label: "Unique weapons",  img: "img/gun.jpg" },
+  spot:    { label: "Secret spots",    img: "img/spot.jpg" },
+  quest:   { label: "Side missions",   img: "img/quest.jpg" },
+  collect: { label: "Collectibles",    img: "img/collect.jpg" },
+  miss:    { label: "Missables",       img: "img/miss.jpg" },
+};
+
+// ch: chapter it becomes available ("any" = free roam / anytime). conf: multi | single | conflict.
+const D = [
+  // ---------------- Easter eggs ----------------
+  { id: "egg-nest", cat: "egg", title: "A literal Easter egg", where: "Radio tower (the Longest Tower), South Vice-Dale County", ch: "any",
+    when: "Any time you can reach Vice-Dale", how: ["Climb the ladder all the way up, about 6 to 7 minutes.", "Find the bird's nest full of eggs at the top.", "Throw an egg as far as you can. A strong throw plays a secret cutscene; a weak one does nothing."],
+    note: "A BASE jump with checkpoints starts from the same platform.", conf: "multi", src: ["sk_spots", "wiki", "ibt_egg"] },
+  { id: "egg-dexter", cat: "egg", title: "Dexter's apartment and boat", where: "Washington Island, Vice City (near Top Fun Drones)", ch: "any",
+    when: "Once Vice City is open", how: ["Walk up to the apartment door. You cannot go inside.", "Check the rooftop for props that look like a serial killer's kit.", "Look for his boat nearby. Players report you can steal it."],
+    note: "Rockstar hasn't confirmed it is a Dexter reference. Guides disagree on exactly what sits on the roof.", conf: "multi", src: ["dexerto_dex", "bloody", "wiki"] },
+  { id: "egg-cooldog", cat: "egg", title: "Cool Dog, the jet-ski rescue", where: "Open ocean off the western islands (near the SOS island)", ch: "any",
+    when: "Any time", how: ["Swim or get stranded far out at sea.", "Wait. A dog on a jet ski, Cool Dog, pulls up to rescue you.", "He drops you on a beach full of dogs."],
+    note: "One guide says a hidden wallet with $1,218 waits on Dog Island.", conf: "multi", src: ["sk_spots", "wiki", "game8"] },
+  { id: "egg-rxmen", cat: "egg", title: "RX-Men parody comic", where: "24/7 store, Key Lento", ch: "1",
+    when: "Chapter 1 onward", how: ["Visit the 24/7 in Key Lento.", "Buy the RX-Men comic, a pharmaceutical spoof of the X-Men from 'ED Comics'."],
+    conf: "multi", src: ["shh", "fh"] },
+  { id: "egg-lospantos", cat: "egg", title: "Los Santos on the boat GPS", where: "The boat in Jason's yard, Key Lento", ch: "1",
+    when: "Chapter 1", how: ["Check the boat's GPS screen. It shows the map of Los Santos from GTA V."],
+    note: "Some guides say this is the boat stolen from Michael in GTA V. That claim has a single source.", conf: "single", src: ["wiki"] },
+  { id: "egg-books", cat: "egg", title: "Liberty City and GTA V nods in print", where: "Jason's house and shops across Leonida", ch: "1",
+    when: "Chapter 1 onward", how: ["Read 'Lethal By Design', billed as a Liberty City memoir.", "Find the magazine with yoga teacher Fabien LaRouche from GTA V.", "Listen for a true-crime podcast about Floyd and Debra."],
+    conf: "single", src: ["wiki"] },
+  { id: "egg-skunkape", cat: "egg", title: "The Skunk Ape (Leonida's Bigfoot)", where: "Grassrivers; one sighting reported south of Hamlet", ch: "1",
+    when: "Night only. Starts with Kirk's side mission", how: ["Watch the Weazel News report about it on the TV at Jason's house.", "Read Kirk's flyer at Skeeter's bar in Hamlet and call him.", "Go hunting at night with Kirk."],
+    note: "Guides place the roadside sighting in different spots.", conf: "conflict", src: ["wiki", "xtreme_eggs", "ppx_side"] },
+  { id: "egg-ufo", cat: "egg", title: "UFO abduction at 2 AM", where: "Roadside forest path near the Starlet Motel / outside Port Gellhorn", ch: "any",
+    when: "Night, around 2 AM. Low chance", how: ["Look for a parked car with flickering lights facing a forest path.", "Follow the path toward the white light. A woman is spinning under a UFO.", "Stand under it to drop her, then go for her car. You wake up the next morning."],
+    note: "One guide says waiting outside Port Gellhorn after 2 AM unlocks a hidden trophy, 'The Truth Is Out There'. Locations differ between guides.", conf: "conflict", src: ["sk_spots", "xtreme_eggs", "wiki"] },
+
+  // ---------------- Rare vehicles ----------------
+  { id: "car-infernus", cat: "car", title: "Pegassi Infernus", where: "7th floor of the police station car park on 9th St, Crosstown, Vice City", ch: "any",
+    when: "Once you have the Clone Key", how: ["Sneak past the station guards to the 7th floor.", "Use the Clone Key to unlock it and leave via the stunt jump.", "It has a tracker. Lose the cops before storing it in a garage."], note: "Guides disagree on the street: Sportskeeda says NE 9th St, GTA-Xtreme says NW 9th St.", conf: "conflict", src: ["sk_cars", "xtreme_cars"] },
+  { id: "car-vitello", cat: "car", title: "Pegassi Vitello", where: "Villa garage on Flamingo Parkway, Waning Sands (east of Belville)", ch: "any",
+    when: "Once you have the Clone Key", how: ["Hop the fence and open the garage.", "Clone-Key the car and drive out the main gate.", "If the gate blocks you, blow it open."], conf: "multi", src: ["sk_cars", "xtreme_cars"] },
+  { id: "car-hellfire", cat: "car", title: "Bravado Gauntlet Hellfire", where: "M7 junkyard off Galerina Street, east of Boone Speedway, Hamlet", ch: "any",
+    when: "Once you have the Clone Key", how: ["Open the junkyard gates first so you can escape fast.", "Sneak past the M7 crew to the back.", "Clone-Key the Hellfire and drive out."], conf: "multi", src: ["sk_cars", "xtreme_cars"] },
+  { id: "car-tempesta", cat: "car", title: "Pegassi Tempesta", where: "NE 3rd Street, Downtown Vice City", ch: "any",
+    when: "Random repossession encounter. Not guaranteed", how: ["Drive past NE 3rd St now and then.", "When it appears, Clone-Key it and shake the police."], conf: "multi", src: ["sk_cars", "xtreme_cars"] },
+  { id: "car-banshee", cat: "car", title: "Bravado Banshee", where: "Sweetbay Inn, East Buckley Drive, Capri", ch: "any",
+    when: "Late at night. Reported sighting", how: ["Visit the Sweetbay Inn car park late at night.", "If it's there, take it. If not, come back another night."], note: "Also unlocks as a cheat vehicle after all Combat challenges.", conf: "single", src: ["xtreme_cars", "leonidaverse"] },
+  { id: "car-furia", cat: "car", title: "Piccia Furia", where: "Mansion garage on Palladia Lane, Peacock Estates, Peacock Bay", ch: "any",
+    when: "Any time", how: ["Find the mansion on Palladia Lane.", "Get into the garage and take the Furia."], conf: "single", src: ["xtreme_cars"] },
+  { id: "car-toros", cat: "car", title: "Pegassi Toros", where: "Outside Pegassi Residences, Bayside Drive, Tequesta", ch: "any",
+    when: "Evenings. Reported sighting", how: ["Drive past Pegassi Residences in the evening.", "It's parked out front when it spawns."], conf: "single", src: ["xtreme_cars"] },
+  { id: "car-paragon", cat: "car", title: "Ascot Paragon", where: "The Banana Hole main bar, Shore Drive, Ocean Beach", ch: "any",
+    when: "Evenings. Reported sighting", how: ["Check the lot by the Banana Hole in the evening."], conf: "single", src: ["xtreme_cars"] },
+  { id: "car-growler", cat: "car", title: "Pfister Growler", where: "Multistorey car park on Fig Street, Ocean Beach", ch: "any",
+    when: "Afternoons. Reported sighting", how: ["Walk the levels of the Fig Street car park in the afternoon."], conf: "single", src: ["xtreme_cars"] },
+  { id: "car-mamba", cat: "car", title: "Mamba GT", where: "Mansion target in Leaf Links", ch: "any",
+    when: "During the side job '¡Dale Mamba!'", how: ["Start '¡Dale Mamba!'.", "Get the key at the mansion and drive it out."], conf: "single", src: ["xtreme_cars"] },
+  { id: "car-sultan", cat: "car", title: "Moses' Emperor Sultan", where: "Reward from Moses' vehicle jobs", ch: "2",
+    when: "Chapter 2 onward", how: ["Finish all of Moses' drop-offs: '82 Canis Crawler, BF Bandito, Declasse Yosemite 1500, Annis Hellion, Western Nightblade, Karin Futo, Declasse Vamos.", "Collect Moses' gift.", "Register it at a garage ($1,600) so you don't lose it."], conf: "single", src: ["sk_cars", "ppx_side"] },
+  { id: "car-cheetah", cat: "car", img: "img/v/cheetah.jpg", title: "'95 Grotti Cheetah", where: "Underground garage, Pegassi Residences, Tequesta Retreat", ch: "5",
+    when: "Ultimate Edition. After 'Honest Abe' in Chapter 5", how: ["Complete the story mission 'Honest Abe'.", "Head to the Pegassi Residences garage and take it."], conf: "multi", src: ["sk_cars", "leonidaverse", "rockstar"] },
+  { id: "car-buggy", cat: "car", img: "img/v/buggy.jpg", title: "'67 Vapid Dominator Buggy", where: "Paradise Garage, Watson Bay (Grassrivers, Mariana County)", ch: "2",
+    when: "Ultimate Edition. After 'Thrillbillies' in Chapter 2", how: ["Finish Billy's 'Thrillbillies' mission.", "Pick it up from the garage.", "It also unlocks Wyman's Classic Car Collection: abandoned classics he restores for you."], conf: "multi", src: ["sk_cars", "leonidaverse"] },
+  { id: "car-squalo", cat: "car", img: "img/v/squalo.jpg", title: "Shitzu Squalo speedboat", where: "Docked in the Washington Beach canal, Vice Beach", ch: "4",
+    when: "Ultimate Edition. Chapter 4", how: ["Head to the Washington Beach canal.", "The Squalo is waiting at the dock."], conf: "multi", src: ["leonidaverse", "gamesgg_cars"] },
+  { id: "car-stanier", cat: "car", img: "img/v/stanier.jpg", title: "'55 Vapid Stanier", where: "Outside the Ocean View Hotel, Ocean Beach", ch: "3",
+    when: "Pre-order bonus (Vintage Vice City Pack). Chapter 3", how: ["Claim the pack, then go to the Ocean View Hotel.", "It comes with the Shore Court garage in Ocean Beach."], conf: "multi", src: ["leonidaverse", "rockstar"] },
+  { id: "car-enduro", cat: "car", img: "img/v/enduro.jpg", title: "Dinka Enduro and Crest kayak", where: "Jason's house, Key Lento", ch: "1",
+    when: "Ultimate Edition. Waiting at the start", how: ["Look outside Jason's house in Chapter 1.", "Ride the Enduro off-road; take the kayak out on the water."], conf: "multi", src: ["leonidaverse", "gamesgg_cars"] },
+  { id: "car-maverick", cat: "car", title: "First helicopter: Buckingham Maverick", where: "Dock by Southwind, next to Mile Zero Air Station", ch: "1",
+    when: "Early. No wanted level needed", how: ["Go to Southwind, west of Key Lento.", "Walk through the open gate to the dock.", "The Maverick is sitting there. Southwind's airstrip also has easy planes."], conf: "multi", src: ["pcg_heli", "leonidaverse"] },
+  { id: "car-lazer", cat: "car", title: "P-996 LAZER fighter jet", where: "Mile Zero Air Station (northern airfield), Mariana County", ch: "1",
+    when: "After 'Gone Fishing' as Jason in Chapter 1", how: ["Get into the base. The jets stand on the northern airfield.", "Take off fast: you get an instant 4 to 5 star wanted level.", "Two fighter jets chase you. The base also has a Botticher Buzzard helicopter."], conf: "multi", src: ["pcg_base", "beebom_jets"] },
+  { id: "car-tank", cat: "car", title: "Military tank (and 'Challenging Tank')", where: "Mile Zero Air Station", ch: "1",
+    when: "Once the base is reachable", how: ["Steal a tank at Mile Zero.", "Shoot enemies with it to unlock the 'Challenging Tank' objective.", "The Hauners Rhino Tank cheat unlocks after all 10 Survival challenges."], conf: "single", src: ["gamesgg_tank", "alcast_ch"] },
+  { id: "car-cheatveh", cat: "car", title: "Challenge-unlock vehicles", where: "Progress menu > Challenges (80 total, 8 categories)", ch: "any",
+    when: "Any time. Some guides say cheats need the story finished", how: ["5 Exploration: Nagasaki Sea Sparrow. All Exploration: Carbon RS.", "All Vehicle: Progen Emerus. All Combat: Bravado Banshee. All Fitness: '65 Dominator.", "Destroy 50 cocaine flamingos: Inflatable Flamingo.", "Finish all 80 challenges: Hauners P-996 LAZER."], note: "TweakTown says cheats only unlock after the story. Other guides don't mention it.", conf: "conflict", src: ["leonidaverse", "alcast_ch", "tweaktown"] },
+
+  // ---------------- Unique weapons ----------------
+  { id: "gun-crabshack", cat: "gun", title: "Crabshack VF5 SMG", where: "Abandoned research outpost, Pelican Valley swamp", ch: "1",
+    when: "Early Chapter 1. Best early gun", how: ["Find the keypad door at the first shack.", "Log into the PC, open the safe, then the door.", "Be ready: a giant crab attacks after the PC login."], codes: ["PC: CLEAVES", "Safe: 0072", "Door: 0212"], conf: "multi", src: ["outputlag_w", "sk_weap"] },
+  { id: "gun-akulus", cat: "gun", title: "Swamp Bait Akulus revolver", where: "Wrecked, blood-covered cabin, Pelican Valley swamp", ch: "1",
+    when: "Chapter 1", how: ["Enter the cabin. No fight needed.", "The revolver is on the floor."], conf: "multi", src: ["outputlag_w", "sk_weap"] },
+  { id: "gun-sm69", cat: "gun", title: "Cruel Huntsman's SM-69 sniper", where: "Same Pelican Valley cabin as the Akulus", ch: "1",
+    when: "Chapter 1", how: ["Cross to the far side of the cabin.", "It sits next to sniper ammo."], conf: "multi", src: ["outputlag_w", "sk_weap"] },
+  { id: "gun-donnie", cat: "gun", title: "Donnie's H&L .38", where: "Trunk of Donnie's '85 Blista", ch: "1", miss: true,
+    when: "Late Chapter 1, during 'Don Gone'", how: ["Open the trunk of Donnie's car before you destroy it."], conf: "multi", src: ["outputlag_w", "outputlag_m"] },
+  { id: "gun-w22", cat: "gun", title: "Kingfishers W-22 rifle", where: "Kingfishers' fishing shack on the island Donnie mentions", ch: "1",
+    when: "Chapter 1, by boat", how: ["Take a boat to the island.", "Clear the guards and open the weapon case. Comes with scope and suppressor."], conf: "single", src: ["outputlag_w"] },
+  { id: "gun-laird-motel", cat: "gun", title: "Kingfishers Laird 350 sniper", where: "Run-down tiger motel, south of Hamlet", ch: "1",
+    when: "Chapter 1", how: ["Follow the gunfire to the motel.", "Loot the first room, then the room next door."], note: "May board up if you drive off.", conf: "multi", src: ["outputlag_w", "metaforge_w"] },
+  { id: "gun-laird-hunter", cat: "gun", title: "Hunter's Laird 350", where: "Dirt road, follow the sound of gunshots", ch: "1",
+    when: "Random encounter, Chapter 1", how: ["Find the wounded hunter.", "Drive him to hospital in his truck. He rewards you."], conf: "single", src: ["outputlag_w"] },
+  { id: "gun-type9", cat: "gun", title: "Conspiracist Type 9", where: "Bunker under a satellite-dish trailer, trailer lot in Mariana County (just under 'Leonida' on the map)", ch: "1",
+    when: "Chapter 1, far north", how: ["Find the trapdoor at the back of the trailer.", "Drop into the bunker and grab it."], conf: "single", src: ["outputlag_w"] },
+  { id: "gun-turnt", cat: "gun", title: "Turnt Nipper .38", where: "Ultralight wreck in a tree, Mariana County coast (Bobcat Bight)", ch: "any",
+    when: "Once you can reach Mariana County", how: ["Shoot the parachute or wreck down from the tree.", "Search it on the ground."], conf: "multi", src: ["outputlag_w", "sk_spots", "detonated"] },
+  { id: "gun-permit", cat: "gun", title: "Assassin Nipper .38 and Smuggler Gorse 425", where: "Shipwrecked boat near Mile Zero Air Station, Permit Keys", ch: "any",
+    when: "Once Permit Keys is open", how: ["Find the shipwreck and the floor hatch inside.", "Two free guns: a pistol and a shotgun."], conf: "single", src: ["detonated"] },
+  { id: "gun-bat", cat: "gun", title: "Brontasaurus Bat", where: "Batting cages, Dino Golf, Frogswater", ch: "any",
+    when: "Any time", how: ["Walk into the batting cages at Dino Golf."], conf: "single", src: ["detonated"] },
+
+  // ---------------- Secret spots ----------------
+  { id: "spot-kalaga", cat: "spot", title: "Mount Kalaga tower and locked shed", where: "Summit of Mount Kalaga, Mount Kalaga National Park", ch: "any",
+    when: "Any time", how: ["Climb the tower and read the board for the code.", "Go to the wooden shed just below and enter it on the keypad.", "Read page two of the logbook inside."], codes: ["Keypad: 69185"], conf: "single", src: ["sk_spots"] },
+  { id: "spot-meteor", cat: "spot", title: "Violet meteor crash site", where: "Northern Lummox County, below the Mount Kalaga Table Rock peak", ch: "any",
+    when: "Any time", how: ["Reach the Table Rock peak.", "Head east and downhill until you find the crater and standing stones."], conf: "multi", src: ["sk_spots", "wiki"] },
+  { id: "spot-sahouse", cat: "spot", title: "The house from a 2021 San Andreas teaser", where: "Belville, Leonard County", ch: "any",
+    when: "Any time. Make sure no cops can see you", how: ["Break in through the white garage door.", "The garage is a conspiracy den with writing and photos.", "Open the car trunk if you dare. There's a snake inside."], note: "The same house appeared in a screenshot hidden in GTA San Andreas Definitive Edition in 2021. A meteorite here can be sold online.", conf: "multi", src: ["dexerto_house", "sk_spots", "wiki"] },
+  { id: "spot-sos", cat: "spot", title: "SOS island and the found footage", where: "Mariana Island, far west of Grassrivers and Watson Bay", ch: "any",
+    when: "Any time", how: ["Travel to the island and find the two SOS signs ('SOS' and 'Send Beer').", "Examine the phone on the ground for a creepy found-footage video."], conf: "single", src: ["sk_spots"] },
+  { id: "spot-wrecks", cat: "spot", title: "Kenton's shipwrecks (33 dives)", where: "Waters around the Leonida Keys", ch: "1",
+    when: "Starts in Chapter 1, pauses after it, returns later", how: ["Meet Kenton for his treasure-diving quests.", "Use the metal detector underwater to dig up treasure.", "33 underwater discoveries count toward 100%."], conf: "multi", src: ["ppx_100", "outputlag_m"] },
+
+  // ---------------- Side missions ----------------
+  { id: "q-kirk", cat: "quest", title: "Kirk: hunt the Skunk Ape", where: "Flyer at Skeeter's bar, Hamlet", ch: "1",
+    when: "Starts Chapter 1, finishes Chapter 2. Night only", how: ["Read the flyer and call Kirk.", "Search for the Skunk Ape, then the tree effigies.", "'Help Kirk Find Mr. Mangrove' is Lucia only."], note: "Counts toward the Strangers & Freaks trophy.", conf: "multi", src: ["ppx_side", "outputlag_side"] },
+  { id: "q-shirley", cat: "quest", title: "Shirley's errands", where: "Jason's neighbour, Key Lento", ch: "1", miss: true,
+    when: "Chapter 1 only. Gone once you start 'Tourist Trap'", how: ["Get Shirley's Rum.", "Steal the Scooter."], note: "Doesn't count toward the trophy, but you can't do it later.", conf: "multi", src: ["ppx_side", "metaforge_m"] },
+  { id: "q-kyle", cat: "quest", title: "Kyle", where: "McKittrick Farm", ch: "2",
+    when: "Chapter 2", how: ["Check out McKittrick Farm.", "Collect chemicals for Kyle.", "Check on Kyle ('Buddy?')."], note: "Counts toward Strangers & Freaks.", conf: "single", src: ["ppx_side"] },
+  { id: "q-bret", cat: "quest", title: "Bret Vogel: hunting decks", where: "Lummox County", ch: "2",
+    when: "After 'Coffee Break' in Chapter 2. Jason only", how: ["Meet Bret in 'Veteran Hunted'.", "Hunt the animals on each target deck. Use clean head or heart shots.", "Deliver all 15 decks for the 'Fair Game' trophy."], conf: "multi", src: ["ppx_side", "ppx_100"] },
+  { id: "q-billy", cat: "quest", title: "Billy's jobs", where: "The Mud Club", ch: "2",
+    when: "Chapter 2", how: ["Thrillbillies, Twist Wrist Smash Grab, Mall Rats, The Impaler.", "Finish 'Hometown Heroes' for 'The Lone Rider' trophy."], conf: "multi", src: ["ppx_side", "outputlag_side"] },
+  { id: "q-yago", cat: "quest", title: "Yago: street racing", where: "Yago's shop, Little Cuba", ch: "3",
+    when: "After 'Dealer's Choice' in Chapter 3", how: ["Join a street race, then mentor Yago (Jason only).", "Do 'Race Against Yago' while it's available. It's time-sensitive and missable.", "Finish with 'Brother to Brother' (Jason only)."], note: "Counts toward Strangers & Freaks.", conf: "multi", src: ["ppx_side", "outputlag_side"] },
+  { id: "q-randy", cat: "quest", title: "Randy's Wish List", where: "Randy", ch: "3",
+    when: "After 'Clonin' Keys, Makin' GS' in Chapter 3", how: ["Steal the cars on Randy's list. They pay far more than Moses.", "Unlocks the 'Supply & Demand' trophy."], conf: "multi", src: ["ppx_side", "outputlag_side"] },
+  { id: "q-andy", cat: "quest", title: "Andy: the Cellerica pyramid", where: "Andy", ch: "3",
+    when: "Chapter 3. Lucia only", how: ["Climb the 'Cellerichain' (parts 1 to 3) and pay the fee.", "Finish with 'Puff Puff Pass' for 'Road to Rehabilitation'."], conf: "single", src: ["ppx_side"] },
+  { id: "q-tyrone", cat: "quest", title: "Tyrone: Kitty Litter Labs", where: "Tyrone", ch: "3",
+    when: "Chapter 3", how: ["Take out the Kitty Litter labs.", "Shut them down for the 'Spin On This!' trophy."], conf: "single", src: ["ppx_side"] },
+  { id: "q-pete", cat: "quest", title: "Pilot Pete's deliveries", where: "Port Gellhorn and airfields", ch: "4",
+    when: "Chapter 4. Jason only", how: ["Recover Pete's plane ('Passing the Torch').", "Fly 'Backseat Pilot', then the Southpoint Airfield and Avery Allen & Co. deliveries."], note: "Counts toward Strangers & Freaks.", conf: "multi", src: ["ppx_side", "outputlag_side"] },
+
+  // ---------------- Collectibles ----------------
+  { id: "c-mags", cat: "collect", title: "Magazines, books and comics", where: "All over Leonida", ch: "any",
+    when: "Any time. Jason's house copies are Chapter 1 only", how: ["27 to find, plus 7 book swaps.", "You need 30 of 34 for 100%. Only unique titles count."], conf: "multi", src: ["ppx_100", "vicecheats"] },
+  { id: "c-meditate", cat: "collect", title: "Meditation spots", where: "18 spots across 10 locations", ch: "any",
+    when: "Any time. The balcony one is Chapter 1 only", how: ["Call your partner and meditate together. Each character counts.", "You need 15 of 18 for 100%."], conf: "multi", src: ["ppx_100", "leonipedia"] },
+  { id: "c-flamingo", cat: "collect", title: "Cocaine flamingos", where: "Lawns and gardens across Leonida", ch: "any",
+    when: "Any time", how: ["Shoot pink flamingos with a black-and-white beak, not the yellow-beaked decor.", "They drop a package you can sell. 100 of 125 for 100%."], conf: "multi", src: ["ppx_100", "vicecheats"] },
+  { id: "c-cards", cat: "collect", title: "Collectible cards", where: "480 cards in 18 sets", ch: "any",
+    when: "Any time", how: ["Complete 15 of the 18 sets.", "Some cards have duplicates elsewhere."], conf: "multi", src: ["ppx_100", "vicecheats"] },
+  { id: "c-animals", cat: "collect", title: "Animals studied (incl. 62 birds)", where: "Swamps, countryside, towns", ch: "any",
+    when: "Any time", how: ["Use binoculars, zoom in and hold the study button.", "Study 100 of 255 animals. Every dog and cat breed counts separately."], note: "Rockstar says Leonida has 62 bird species and 170+ animal species.", conf: "multi", src: ["ppx_100", "pcgamer_birds", "gi_animals"] },
+  { id: "c-wainK", cat: "collect", title: "WAiNK scans and vehicles", where: "Landmarks, sculptures, busy roads", ch: "any",
+    when: "Any time", how: ["Scan 100 landmarks with WAiNK.", "Scan 200 of 277 base vehicles, including boats and aircraft."], conf: "single", src: ["ppx_100"] },
+  { id: "c-stunts", cat: "collect", title: "Stunts", where: "Bridges, ramps, rooftops", ch: "any",
+    when: "Any time", how: ["300 of 397 needed: stunt jumps, under-the-bridges, knife flights, BASE jumps.", "Under-the-bridges is the fastest category."], conf: "single", src: ["ppx_100"] },
+
+  // ---------------- Missables ----------------
+  { id: "m-balcony", cat: "miss", title: "Lucia's balcony meditation", where: "Jason's house, Key Lento", ch: "1", miss: true,
+    when: "The morning after 'Down to Earth'", how: ["Follow Lucia from the kitchen to the balcony and accept.", "Gone after Chapter 1."], note: "May be needed for the 'Positive Mental Attitude' trophy. Not confirmed.", conf: "multi", src: ["outputlag_m", "leonipedia", "gta6patch"] },
+  { id: "m-mags", cat: "miss", title: "The 5 books in Jason's house", where: "Bedside table, living room, tool shed, back deck", ch: "1", miss: true,
+    when: "Before Chapter 1 ends", how: ["Ashes of Glory, Lethal By Design, Orca: A Whole Different Animal, Off the Hook, Body Copy.", "You can't get back into the house later."], note: "Copies reportedly appear elsewhere, so 100% is still possible.", conf: "multi", src: ["metaforge_m", "outputlag_m"] },
+  { id: "m-yago", cat: "miss", title: "Race Against Yago", where: "Yago's questline, Little Cuba", ch: "3", miss: true,
+    when: "Time-sensitive in Chapter 3", how: ["Do it as soon as it appears."], conf: "single", src: ["ppx_side"] },
+  { id: "m-save", cat: "miss", title: "Make a manual save before 'Tourist Trap'", where: "Pause menu", ch: "1",
+    when: "Late Chapter 1", how: ["Use one of the 15 manual save slots before starting 'Tourist Trap'.", "There's no mission replay, so this is your safety net."], conf: "multi", src: ["outputlag_m", "metaforge_m"] },
+];
+
+// ---------- state (per-viewer, optional) ----------
+const KEY = "leonida-found-v1";
+let found = new Set();
+try { found = new Set(JSON.parse(localStorage.getItem(KEY) || "[]")); } catch (e) {}
+function saveFound() { try { localStorage.setItem(KEY, JSON.stringify([...found])); } catch (e) {} }
+let activeCat = "";
+
+const $ = (s) => document.querySelector(s);
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const PIN = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 10-14 0c0 5.8 7 12 7 12z" stroke="#ffb347" stroke-width="2"/><circle cx="12" cy="10" r="2.5" fill="#ffb347"/></svg>';
+const CONF = { multi: "Multi-source", single: "Single source", conflict: "Conflicting" };
+const chLabel = (c) => (c === "any" ? "Anytime" : "Ch " + c);
+
+function renderRail() {
+  $("#rail").innerHTML = Object.entries(CATS).map(([k, c]) => {
+    const n = D.filter((d) => d.cat === k).length;
+    return `<button class="tile" data-cat="${k}" aria-pressed="false"><img src="${c.img}" alt="" loading="lazy"><span><strong>${c.label}</strong><small>${n} entries</small></span></button>`;
+  }).join("") + `<a class="tile" href="#cheats" style="text-decoration:none"><img src="img/cheat.jpg" alt="" loading="lazy"><span><strong>Cheat codes</strong><small>${CH.length} codes</small></span></a>`;
+  $("#rail").addEventListener("click", (e) => {
+    const t = e.target.closest(".tile"); if (!t || !t.dataset.cat) return;
+    activeCat = activeCat === t.dataset.cat ? "" : t.dataset.cat;
+    document.querySelectorAll(".tile").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.cat === activeCat)));
+    render();
+  });
+}
+
+function renderStats() {
+  const multi = D.filter((d) => d.conf === "multi").length;
+  const miss = D.filter((d) => d.miss || d.cat === "miss").length;
+  const codes = D.reduce((a, d) => a + (d.codes ? d.codes.length : 0), 0);
+  $("#stats").innerHTML = `<span class="stat"><b>${D.length}</b> entries</span><span class="stat"><b>${multi}</b> confirmed by 2+ guides</span><span class="stat"><b>${miss}</b> missables flagged</span><span class="stat"><b>${codes}</b> keypad codes</span><span class="stat"><b>${Object.keys(P).length}</b> map pins</span><span class="stat"><b>${CH.length}</b> cheat codes</span>`;
+}
+
+function card(d) {
+  const isFound = found.has(d.id);
+  return `<article class="card${isFound ? " found" : ""}" data-id="${d.id}">${shot(d)}
+    <div class="card__top"><span class="tag cat">${CATS[d.cat].label}</span><span class="tag">${chLabel(d.ch)}</span>${d.miss ? '<span class="tag miss">Missable</span>' : ""}<span class="tag c-${d.conf}">${CONF[d.conf]}</span></div>
+    <h3>${esc(d.title)}</h3>
+    <div class="where">${PIN}<span>${esc(d.where)}</span></div>
+    <div class="when">${esc(d.when)}</div>
+    <ol class="how">${d.how.map((h) => `<li>${esc(h)}</li>`).join("")}</ol>
+    ${d.codes ? `<div class="codes">${d.codes.map((c) => `<button class="code" data-copy="${esc(c.split(": ").pop())}" title="Copy">${esc(c)}</button>`).join("")}</div>` : ""}
+    ${d.note ? `<div class="note">${esc(d.note)}</div>` : ""}
+    <div class="card__foot"><div class="src">Source: ${d.src.map((k) => `<a href="${S[k][1]}" target="_blank" rel="noopener">${S[k][0]}</a>`).join("")}</div>
+    <label class="found-btn" for="f-${d.id}"><input type="checkbox" id="f-${d.id}" data-found="${d.id}" ${isFound ? "checked" : ""}> Found it</label></div>
+  </article>`;
+}
+
+function render() {
+  const q = $("#q").value.trim().toLowerCase();
+  const ch = $("#chapter").value;
+  const onlyMulti = $("#verified").checked;
+  const hideFound = $("#hidefound").checked;
+  const list = D.filter((d) =>
+    (!activeCat || d.cat === activeCat) &&
+    (!ch || d.ch === ch) &&
+    (!onlyMulti || d.conf === "multi") &&
+    (!hideFound || !found.has(d.id)) &&
+    (!q || [d.title, d.where, d.when, d.note || "", ...(d.how || []), ...(d.codes || []), CATS[d.cat].label].join(" ").toLowerCase().includes(q))
+  );
+  $("#grid").innerHTML = list.length ? list.map(card).join("") : `<div class="empty">Nothing matches those filters. Try another chapter or clear the search.</div>`;
+  $("#count").textContent = `Showing ${list.length} of ${D.length}` + (activeCat ? ` · ${CATS[activeCat].label}` : "");
+  $("#progress").innerHTML = `Found <b>${found.size}</b> / ${D.length}`;
+}
+
+function toast(msg) { const t = $("#toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(toast._t); toast._t = setTimeout(() => t.classList.remove("show"), 1400); }
+
+document.addEventListener("change", (e) => {
+  const id = e.target.dataset && e.target.dataset.found;
+  if (id) {
+    e.target.checked ? found.add(id) : found.delete(id);
+    saveFound();
+    const c = e.target.closest(".card"); if (c) c.classList.toggle("found", e.target.checked);
+    $("#progress").innerHTML = `Found <b>${found.size}</b> / ${D.length}`;
+    if ($("#hidefound").checked) render();
+  }
+});
+document.addEventListener("click", (e) => {
+  const b = e.target.closest(".code, .copybtn"); if (!b) return;
+  const v = b.dataset.copy;
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(v).then(() => toast(`Copied ${v}`)).catch(() => toast(v));
+  } else { toast(v); }
+});
+["#q", "#chapter", "#verified", "#hidefound"].forEach((s) => $(s).addEventListener("input", render));
+
+
+// ---------- cheats (codes: PC Gamer, Beebom, GamerTweak; unlocks: PC Gamer) ----------
+const CH = [
+  { g: "Player", n: "$250,000", e: "Adds $250,000 cash. Can be repeated.", c: "URDLULDR", u: "Finish the story (reported)" },
+  { g: "Player", n: "Body armor", e: "Full armor.", c: "DULUUUUUDD", u: "Complete 100 workouts" },
+  { g: "Player", n: "Unlimited Focus", e: "Focus never runs out.", c: "DUUDUDUDUR", u: "" },
+  { g: "Player", n: "Drunk", e: "Your character is drunk.", c: "ULRUULRULR", u: "Spend $2,500 on alcohol" },
+  { g: "Police", n: "Raise wanted level", e: "Adds a wanted star.", c: "LDRDURU", u: "Lose a 3-star wanted level 50 times" },
+  { g: "Police", n: "Raise heat level", e: "Raises your heat level.", c: "LDRDUDU", u: "" },
+  { g: "Weapons", n: "Max ammo", e: "Fills all ammo.", c: "DURDLLUUDL", u: "20 bronze medals or better at shooting ranges" },
+  { g: "Weapons", n: "Infinite ammo", e: "Ammo never runs out.", c: "DURDLLUDDD", u: "25 silver medals or better at shooting ranges" },
+  { g: "Weapons", n: "No reload", e: "Never reload.", c: "DURDLLUDDU", u: "25 gold medals at shooting ranges" },
+  { g: "Chaos", n: "Attack force", e: "", c: "DULLRDDUD", u: "" },
+  { g: "Chaos", n: "Exploding balls", e: "", c: "DULLRDDUR", u: "" },
+  { g: "Chaos", n: "Vehicle force", e: "", c: "DULLRDLUD", u: "Kill 25 enemies with a vehicle" },
+  { g: "Vehicles", n: "Maibatsu Boomazoom", e: "Spawns the Boomazoom.", c: "LURDLLUL", u: "" },
+  { g: "Vehicles", n: "MTL Pumper", e: "Spawns a fire truck.", c: "LURDLRRU", u: "Discover it in the Progress menu" },
+  { g: "Vehicles", n: "HVY Bulldozer", e: "Spawns a bulldozer.", c: "LURDLRRD", u: "" },
+  { g: "World", n: "Cycle weather", e: "Changes the weather.", c: "DRUDRUR", u: "" },
+  { g: "Filters", n: "Cataclysm", e: "", c: "DDURRULLRR", u: "Discover Martha's Vamos in the Progress menu" },
+  { g: "Filters", n: "Dollhouse", e: "", c: "DDURRULLDR", u: "" },
+  { g: "Filters", n: "Faded Glory", e: "", c: "DDURRULLLR", u: "Rob 50 stores with your partner" },
+];
+const ARW = { U: "↑", D: "↓", L: "←", R: "→" };
+const WORD = { U: "Up", D: "Down", L: "Left", R: "Right" };
+let cgroup = "";
+function renderCheats() {
+  const groups = [...new Set(CH.map((c) => c.g))];
+  $("#cfilters").innerHTML = `<button class="key" data-cg="" aria-pressed="${!cgroup}">All ${CH.length}</button>` +
+    groups.map((g) => `<button class="key" data-cg="${g}" aria-pressed="${cgroup === g}">${g}</button>`).join("");
+  $("#clist").innerHTML = CH.filter((c) => !cgroup || c.g === cgroup).map((c) => `<article class="cheat">
+    <div class="cheat__top"><div><span class="tag">${c.g}</span><h3 style="margin-top:8px">${esc(c.n)}</h3></div>
+    <button class="copybtn" data-copy="${[...c.c].map((k) => WORD[k]).join(", ")}" aria-label="Copy ${esc(c.n)} code">Copy</button></div>
+    <div class="pad" aria-label="${[...c.c].map((k) => WORD[k]).join(", ")}">${[...c.c].map((k) => `<span>${ARW[k]}</span>`).join("")}</div>
+    ${c.e ? `<p>${esc(c.e)}</p>` : ""}<div class="unlock">Unlock: ${c.u ? esc(c.u) : "not found yet"}</div></article>`).join("");
+}
+$("#cfilters").addEventListener("click", (e) => { const b = e.target.closest("[data-cg]"); if (!b) return; cgroup = b.dataset.cg; renderCheats(); });
+
+// ---------- map pins: [x%, y%] on the official poster (approximate areas) ----------
+const P = {
+  "egg-nest": [62.0, 69.3], "egg-dexter": [80.3, 43.3], "egg-cooldog": [13.7, 46.7], "egg-rxmen": [57.6, 82.2],
+  "egg-lospantos": [55.6, 83.9], "egg-skunkape": [43.8, 66.0], "egg-ufo": [32.8, 38.3],
+  "car-infernus": [69.8, 49.7], "car-vitello": [73.0, 33.0], "car-hellfire": [59.3, 67.3], "car-tempesta": [71.4, 53.4],
+  "car-banshee": [29.7, 52.3], "car-furia": [65.0, 64.0], "car-toros": [76.4, 59.8], "car-paragon": [83.6, 53.2],
+  "car-growler": [81.6, 50.9], "car-mamba": [77.1, 41.0], "car-cheetah": [74.4, 58.7], "car-buggy": [42.9, 69.7],
+  "car-squalo": [83.5, 44.3], "car-stanier": [82.4, 52.2], "car-enduro": [54.4, 84.6], "car-maverick": [32.8, 85.4],
+  "car-lazer": [27.2, 86.2], "car-tank": [26.0, 88.0],
+  "gun-crabshack": [53.4, 72.7], "gun-akulus": [51.6, 73.9], "gun-sm69": [50.6, 72.5], "gun-laird-motel": [56.6, 70.7],
+  "gun-turnt": [33.8, 61.0], "gun-permit": [36.0, 84.4], "gun-bat": [47.4, 34.3],
+  "spot-kalaga": [51.1, 22.3], "spot-meteor": [55.5, 19.5], "spot-sahouse": [66.1, 39.3], "spot-sos": [18.2, 64.0], "spot-wrecks": [47.4, 86.0],
+  "q-kirk": [54.7, 68.3], "q-shirley": [56.6, 83.0], "q-bret": [45.5, 19.0], "q-yago": [67.1, 51.9], "q-pete": [29.2, 35.3],
+};
+const COL = { egg: "#ff5e8a", car: "#ffb347", gun: "#ff6a3d", spot: "#3fd6c6", quest: "#a98bff", collect: "#4fdc8d", miss: "#ff3b5c" };
+let mapCat = "", pinSel = "", zoom = 1;
+
+const PH = { "egg-nest": "img/s/Vice_City_22.jpg", "egg-dexter": "img/s/Vice_City_10.jpg", "egg-cooldog": "img/s/Leonida_Keys_05.jpg", "egg-rxmen": "img/s/Leonida_Keys_03.jpg", "egg-lospantos": "img/s/Jason_Duval_03.jpg", "egg-books": "img/s/Jason_Duval_09.jpg", "egg-skunkape": "img/s/Grassrivers_08.jpg", "egg-ufo": "img/s/Port_Gellhorn_01.jpg", "car-infernus": "img/s/Vice_City_09.jpg", "car-vitello": "img/s/Vice_City_02.jpg", "car-hellfire": "img/s/Vice_City_20.jpg", "car-tempesta": "img/s/Vice_City_03.jpg", "car-banshee": "img/s/Vice_City_08.jpg", "car-furia": "img/s/Vice_City_26.jpg", "car-toros": "img/s/Vice_City_11.jpg", "car-paragon": "img/s/Vice_City_05.jpg", "car-growler": "img/s/Vice_City_24.jpg", "car-mamba": "img/s/Vice_City_14.jpg", "car-sultan": "img/s/Jason_and_Lucia_06.jpg", "car-maverick": "img/s/Mount_Kalaga_National_Park_02.jpg", "car-lazer": "img/s/Leonida_Keys_01.jpg", "car-tank": "img/s/Jason_and_Lucia_09.jpg", "car-cheatveh": "img/s/Vice_City_17.jpg", "gun-crabshack": "img/s/Grassrivers_05.jpg", "gun-akulus": "img/s/Grassrivers_07.jpg", "gun-sm69": "img/s/Grassrivers_06.jpg", "gun-donnie": "img/s/Jason_Duval_18.jpg", "gun-w22": "img/s/Grassrivers_02.jpg", "gun-laird-motel": "img/s/Port_Gellhorn_04.jpg", "gun-laird-hunter": "img/s/Mount_Kalaga_National_Park_03.jpg", "gun-type9": "img/s/Ambrosia_02.jpg", "gun-turnt": "img/s/Grassrivers_04.jpg", "gun-permit": "img/s/Leonida_Keys_04.jpg", "gun-bat": "img/s/Cal_Hampton_01.jpg", "spot-kalaga": "img/s/Mount_Kalaga_National_Park_04.jpg", "spot-meteor": "img/s/Mount_Kalaga_National_Park_01.jpg", "spot-sahouse": "img/s/Port_Gellhorn_06.jpg", "spot-sos": "img/s/Grassrivers_03.jpg", "spot-wrecks": "img/s/Leonida_Keys_07.jpg", "q-kirk": "img/s/Grassrivers_06.jpg", "q-shirley": "img/s/Leonida_Keys_02.jpg", "q-kyle": "img/s/Ambrosia_06.jpg", "q-bret": "img/s/Mount_Kalaga_National_Park_05.jpg", "q-billy": "img/s/Ambrosia_01.jpg", "q-yago": "img/s/Jason_and_Lucia_19.jpg", "q-randy": "img/s/Vice_City_06.jpg", "q-andy": "img/s/Real_Dimez_02.jpg", "q-tyrone": "img/s/Vice_City_21.jpg", "q-pete": "img/s/Port_Gellhorn_03.jpg", "c-mags": "img/s/Lucia_Caminos_08.jpg", "c-meditate": "img/s/Jason_and_Lucia_16.jpg", "c-flamingo": "img/s/Vice_City_26.jpg", "c-cards": "img/s/Vice_City_13.jpg", "c-animals": "img/s/Leonida_Keys_06.jpg", "c-wainK": "img/s/Vice_City_01.jpg", "c-stunts": "img/s/Mount_Kalaga_National_Park_06.jpg", "m-balcony": "img/s/Jason_and_Lucia_13.jpg", "m-mags": "img/s/Jason_Duval_15.jpg", "m-yago": "img/s/Lucia_Caminos_07.jpg", "m-save": "img/s/Jason_and_Lucia_02.jpg" };
+function shot(d) {
+  if (d.img) return `<div class="shot"><img src="${d.img}" alt="${esc(d.title)}, official Rockstar screenshot" loading="lazy"><small>Official · this vehicle</small></div>`;
+  const n = PH[d.id];
+  return n ? `<div class="shot"><img src="${n}" alt="Official GTA VI screenshot for ${esc(d.title)}" loading="lazy"><small>Official screenshot · area</small></div>` : "";
+}
+
+function renderPins() {
+  $("#pins").innerHTML = D.filter((d) => P[d.id]).map((d) => {
+    const [x, y] = P[d.id];
+    return `<button class="pin${mapCat && d.cat !== mapCat ? " dim" : ""}" style="left:${x}%;top:${y}%;background:${COL[d.cat]}" data-pin="${d.id}" aria-pressed="${d.id === pinSel}" aria-label="${esc(d.title)}" title="${esc(d.title)}"></button>`;
+  }).join("");
+}
+function renderKeys() {
+  const cats = [...new Set(D.filter((d) => P[d.id]).map((d) => d.cat))];
+  $("#keys").innerHTML = `<button class="key" data-key="" aria-pressed="${!mapCat}">All pins</button>` +
+    cats.map((c) => `<button class="key" data-key="${c}" aria-pressed="${mapCat === c}"><i style="background:${COL[c]}"></i>${CATS[c].label}</button>`).join("");
+}
+function peek(id) {
+  const d = D.find((x) => x.id === id); if (!d) return;
+  pinSel = id; renderPins();
+  $("#peek").innerHTML = `${shot(d, true)}<div class="peek__body"><div class="card__top"><span class="tag cat">${CATS[d.cat].label}</span><span class="tag">${chLabel(d.ch)}</span>${d.miss ? '<span class="tag miss">Missable</span>' : ""}<span class="tag c-${d.conf}">${CONF[d.conf]}</span></div>
+    <h3>${esc(d.title)}</h3><div class="where">${PIN}<span>${esc(d.where)}</span></div><div class="when">${esc(d.when)}</div>
+    ${d.codes ? `<div class="codes">${d.codes.map((c) => `<button class="code" data-copy="${esc(c.split(": ").pop())}">${esc(c)}</button>`).join("")}</div>` : ""}
+    <button class="btn" data-open="${d.id}">Full steps ↓</button></div>`;
+}
+function openEntry(id) {
+  const d = D.find((x) => x.id === id);
+  $("#q").value = ""; $("#chapter").value = ""; $("#verified").checked = false; $("#hidefound").checked = false;
+  activeCat = d.cat;
+  document.querySelectorAll(".tile").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.cat === activeCat)));
+  render();
+  const el = document.querySelector(`.card[data-id="${id}"]`);
+  if (el) { el.scrollIntoView({ behavior: "smooth", block: "center" }); el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash"); }
+}
+function setZoom(z) {
+  const m = $("#map"), inner = $("#mapInner");
+  const cx = (m.scrollLeft + m.clientWidth / 2) / (m.clientWidth * zoom), cy = (m.scrollTop + m.clientHeight / 2) / (m.clientHeight * zoom);
+  zoom = Math.max(1, Math.min(3, z));
+  inner.style.width = inner.style.height = zoom * 100 + "%";
+  m.classList.toggle("zoomed", zoom > 1);
+  m.scrollLeft = cx * m.clientWidth * zoom - m.clientWidth / 2; m.scrollTop = cy * m.clientHeight * zoom - m.clientHeight / 2;
+}
+$("#zin").addEventListener("click", () => setZoom(zoom + 0.75));
+$("#zout").addEventListener("click", () => setZoom(zoom - 0.75));
+$("#keys").addEventListener("click", (e) => { const k = e.target.closest(".key"); if (!k) return; mapCat = k.dataset.key; renderKeys(); renderPins(); });
+document.addEventListener("click", (e) => {
+  const p = e.target.closest(".pin"); if (p) { peek(p.dataset.pin); if (window.innerWidth <= 980) $("#peek").scrollIntoView({ behavior: "smooth", block: "nearest" }); return; }
+  const o = e.target.closest("[data-open]"); if (o) openEntry(o.dataset.open);
+});
+
+renderRail(); renderStats(); render(); renderKeys(); renderPins(); renderCheats(); peek("car-cheetah");
+</script>
+
+</body>
+</html>
